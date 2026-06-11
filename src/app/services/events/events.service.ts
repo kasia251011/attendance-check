@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class EventsService {
   private events: Event[] = [];
+  private activeEvent: Event | null = null;
 
   getEvents(): Event[] {
     return this.events;
@@ -17,43 +18,31 @@ export class EventsService {
   }
 
   getActiveEvent() {
-    return this.events.find((list) => list.active);
+    return this.activeEvent;
   }
 
   createEvent(name: string, date: Dayjs, users: User[]): void {
-    const newList: Event = {
+    const newEvent: Event = {
       id: uuid(),
       name,
       date,
       active: true,
       attendees: users.map((user) => ({ ...user, checkedIn: false })),
     };
-    this.events.push(newList);
+    this.activeEvent = newEvent;
   }
 
   saveEvent(id: string): void {
-    const event = this.events.find((list) => list.id === id);
-    if (event) {
-      event.active = false;
-    }
+    this.events.push(this.activeEvent!);
+    this.activeEvent = null;
   }
 
-  checkInUser(eventId: string, userId: string): void {
-    const event = this.events.find((list) => list.id === eventId);
-    if (event) {
-      const userEntry = event.attendees.find((attendee) => attendee.id === userId);
+  checkInOutUser(userId: string): void {
+    if (this.activeEvent) {
+      const attendees = this.activeEvent.attendees;
+      const userEntry = attendees.find((attendee) => attendee.id === userId);
       if (userEntry) {
-        userEntry.checkedIn = true;
-      }
-    }
-  }
-
-  checkOutUser(eventId: string, userId: string): void {
-    const event = this.events.find((list) => list.id === eventId);
-    if (event) {
-      const userEntry = event.attendees.find((attendee) => attendee.id === userId);
-      if (userEntry) {
-        userEntry.checkedIn = false;
+        userEntry.checkedIn = !userEntry.checkedIn;
       }
     }
   }

@@ -5,11 +5,8 @@
   </div>
 }
 
-@for (user of getActiveEvent()?.attendees; track user.id) {
-  <div
-    class="p-4 border-b border-slate-100 last:border-0 cursor-pointer flex justify-between items-center gap-4"
-  >
-    <p>{{ user.name }}</p>
-    <mat-slide-toggle></mat-slide-toggle>
-  </div>
+@if (getActiveEvent()) {
+  @for (user of getActiveEvent()?.attendees; track user.id) {
+    <app-user-check-in [user]="user" [userNo]="$index + 1"></app-user-check-in>
+  }
 }

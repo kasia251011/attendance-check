@@ -1,5 +1,5 @@
 <div
-  class="h-dvh w-full bg-linear-to-t from-[#d7dcf1] to-white p-4 sm:px-10 md:px-100 flex flex-col"
+  class="h-dvh w-full bg-linear-to-t from-[#d7dcf1] to-white p-4 sm:px-10 lg:px-100 flex flex-col"
 >
   <div class="pt-20 flex justify-around">
     <button matButton [class.text-black!]="!isActive('/upcoming')" routerLink="/upcoming">
@@ -9,7 +9,7 @@
       Previous
     </button>
   </div>
-  <div class="bg-white h-full rounded-3xl p-8 mt-4 overflow-auto">
+  <div class="bg-white h-full rounded-3xl p-8 mt-4 overflow-auto scrollbar-none">
     <router-outlet />
   </div>
 </div>
