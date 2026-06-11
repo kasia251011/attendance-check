@@ -1,10 +1,19 @@
 @if (!activeEvent()) {
   <div class="flex items-center justify-center flex-col pt-20">
-    <p class="p-4 text-slate-500">No current event</p>
+    @if (hasEvents()) {
+      <h3 class="text-2xl font-medium">Great, you saved your attendance list!</h3>
+      <p class="p-4 text-slate-500 mb-2">
+        Now you can view your previous events or create a new one.
+      </p>
+    } @else {
+      <h3 class="text-2xl font-medium">Welcome to Attendance App!</h3>
+      <p class="p-4 text-slate-500 mb-2">Here you can create a new event and check in attendees.</p>
+    }
+
     <button matButton="elevated" (click)="createEvent()">Create Event</button>
   </div>
 } @else {
-  <div class="flex items-center justify-between">
+  <div class="sticky pt-8 pb-4 top-0 flex items-center justify-between bg-white z-10">
     <div class="flex gap-4 text-base">
       <p>Event {{ activeEvent()?.name }}</p>
       <p class="text-slate-500">{{ activeEvent()?.date?.format('D MMM YYYY, hh:mm A') }}</p>

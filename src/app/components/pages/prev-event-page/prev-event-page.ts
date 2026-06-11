@@ -1,11 +1,11 @@
 import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventsService } from '../../services/events/events.service';
-import { countCheckedIn } from '../../services/events/events.utils';
-import { UserCheckIn } from '../user-check-in/user-check-in';
+import { EventsService } from 'app/services/events/events.service';
+import { countCheckedIn } from 'app/services/events/events.utils';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { UserCheckIn } from 'app/components/user-check-in/user-check-in';
 
 @Component({
   selector: 'app-prev-event-page',
@@ -24,6 +24,6 @@ export class PrevEventPage {
   countCheckedIn = computed(() => countCheckedIn(this.event()!));
 
   navigateToEvents() {
-    this.router.navigate(['/previous']);
+    this.router.navigate(['/previous-events']);
   }
 }

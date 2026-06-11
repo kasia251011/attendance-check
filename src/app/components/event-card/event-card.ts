@@ -36,6 +36,6 @@ export class EventCard {
   constructor(private router: Router) {}
 
   navigateToEvent() {
-    this.router.navigate(['/previous', this.event().id]);
+    this.router.navigate(['/previous-events', this.event().id]);
   }
 }
