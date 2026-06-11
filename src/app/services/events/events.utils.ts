@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { Event } from './events.model';
 
 export const countCheckedIn = (event: Event) => {
-  return event.attendees.filter((u: any) => u.checkedIn).length;
+  return event.attendees.filter((u) => u.checkedIn).length;
 };
 
 export const groupByDate = (events: Event[]) => {
@@ -21,8 +21,10 @@ export const groupByDate = (events: Event[]) => {
     ),
   };
 
-  return Object.entries(grouped).map(([date, events]) => ({
-    date: dayjs(date),
-    events,
-  }));
+  return Object.entries(grouped)
+    .sort(([dateA], [dateB]) => dayjs(dateB).diff(dayjs(dateA)))
+    .map(([date, events]) => ({
+      date: dayjs(date),
+      events: events.sort((a, b) => b.date.diff(a.date)),
+    }));
 };

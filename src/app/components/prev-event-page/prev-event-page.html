@@ -1,0 +1,23 @@
+@if (!event()) {
+  <div class="flex items-center justify-center flex-col pt-20">
+    <p class="p-4 text-slate-500">Error loading event</p>
+  </div>
+} @else {
+  <div class="flex items-center justify-between pr-4">
+    <div class="flex items-center gap-4">
+      <button mat-icon-button (click)="navigateToEvents()">
+        <mat-icon fontIcon="arrow_back" />
+      </button>
+      <div class="flex gap-4 text-base">
+        <p>Class {{ event()?.name }}</p>
+        <p class="text-slate-500">{{ event()?.date?.format('D MMM YYYY, hh:mm A') }}</p>
+      </div>
+    </div>
+    <div class="flex gap-4 items-center">
+      <p>{{ countCheckedIn() }} / {{ event()?.attendees?.length }}</p>
+    </div>
+  </div>
+  @for (user of event()?.attendees; track user.id) {
+    <app-user-check-in [user]="user" [userNo]="$index + 1" [editable]="false" />
+  }
+}

@@ -2,6 +2,7 @@ import { Component, computed, input } from '@angular/core';
 import { Event } from '../../services/events/events.model';
 import { countCheckedIn } from '../../services/events/events.utils';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-event-card',
@@ -9,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [MatIconModule],
   template: `
     <div
+      (click)="navigateToEvent()"
       class="flex flex-col border border-slate-100 rounded-xl p-4 cursor-pointer hover:bg-slate-100"
     >
       <p class="font-medium">Class {{ event().name }}</p>
@@ -30,4 +32,10 @@ import { MatIconModule } from '@angular/material/icon';
 export class EventCard {
   event = input.required<Event>();
   attendeesCheckedInCount = computed(() => countCheckedIn(this.event()));
+
+  constructor(private router: Router) {}
+
+  navigateToEvent() {
+    this.router.navigate(['/previous', this.event().id]);
+  }
 }

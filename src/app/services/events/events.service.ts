@@ -16,10 +16,10 @@ export class EventsService {
     return this.events().find((list) => list.id === id);
   }
 
-  createEvent(name: string, date: Dayjs, users: User[]): void {
+  createEvent(date: Dayjs, users: User[]): void {
     const newEvent: Event = {
       id: uuid(),
-      name,
+      name: `${this.events().length + 1}`,
       date,
       active: true,
       attendees: users.map((user) => ({ ...user, checkedIn: false })),
@@ -33,12 +33,16 @@ export class EventsService {
   }
 
   checkInOutUser(userId: string): void {
-    if (this._activeEvent()) {
-      const attendees = this._activeEvent()!.attendees;
-      const userEntry = attendees.find((attendee) => attendee.id === userId);
-      if (userEntry) {
-        userEntry.checkedIn = !userEntry.checkedIn;
-      }
-    }
+    this._activeEvent.update((event) => {
+      if (!event) return event;
+      return {
+        ...event,
+        attendees: event.attendees.map((attendee) =>
+          attendee.id === userId
+            ? { ...attendee, checkedIn: !attendee.checkedIn }
+            : attendee
+        ),
+      };
+    });
   }
 }

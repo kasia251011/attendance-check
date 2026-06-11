@@ -15,11 +15,16 @@ import { UserEntry } from '../../services/events/events.model';
         <p>{{ userNo() }}</p>
         <p>{{ user().name }}</p>
       </div>
-      <mat-slide-toggle (change)="checkInUser(user().id)" [checked]="user().checkedIn" />
+      <mat-slide-toggle
+        (change)="checkInUser(user().id)"
+        [checked]="user().checkedIn"
+        [disabled]="!editable()"
+      />
     </div>
   `,
 })
 export class UserCheckIn {
+  editable = input<boolean>(true);
   user = input.required<UserEntry>();
   userNo = input.required<number>();
 

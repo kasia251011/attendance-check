@@ -1,6 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -9,7 +9,7 @@ import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/route
   templateUrl: './home-page.html',
 })
 export class HomePage {
-  constructor(private router: Router) {}
+  private router = inject(Router);
 
   isActive(path: string) {
     return this.router.url === path;

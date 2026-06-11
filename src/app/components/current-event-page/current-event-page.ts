@@ -4,23 +4,23 @@ import dayjs from 'dayjs';
 import { UsersService } from '../../services/users/users.service';
 import { MatButtonModule } from '@angular/material/button';
 import { UserCheckIn } from '../user-check-in/user-check-in';
-import { countCheckedIn } from '../../services/events/events.utils';
+import { countCheckedIn as fun } from '../../services/events/events.utils';
 
 @Component({
-  selector: 'app-upcoming-page',
+  selector: 'app-current-event-page',
   imports: [MatButtonModule, UserCheckIn],
-  templateUrl: './upcoming-page.html',
+  templateUrl: './current-event-page.html',
 })
-export class UpcomingPage {
+export class CurrentEventPage {
   eventsService = inject(EventsService);
   usersService = inject(UsersService);
 
-  events = computed(() => this.eventsService.events());
   activeEvent = computed(() => this.eventsService.activeEvent());
-  countCheckedIn = computed(() => countCheckedIn(this.activeEvent()!));
 
-  createEvent(name: string) {
-    this.eventsService.createEvent(name, dayjs(), this.usersService.getUsers());
+  countCheckedIn = computed(() => fun(this.activeEvent()!));
+
+  createEvent() {
+    this.eventsService.createEvent(dayjs(), this.usersService.getUsers());
   }
 
   saveEvent() {
