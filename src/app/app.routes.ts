@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { App } from './app';
-import { UpcomingPage } from './upcoming-page/upcoming-page';
-import { PreviousPage } from './previous-page/previous-page';
-import { HomePage } from './home-page/home-page';
+import { UpcomingPage } from './components/upcoming-page/upcoming-page';
+import { PreviousPage } from './components/previous-page/previous-page';
+import { HomePage } from './components/home-page/home-page';
 
 export const routes: Routes = [
   {
