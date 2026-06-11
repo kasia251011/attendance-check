@@ -1,6 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { EventsService } from '../../services/events/events.service';
 import { EventCard } from '../event-card/event-card';
+import { groupByDate } from '../../services/events/events.utils';
 
 @Component({
   selector: 'app-previous-page',
@@ -12,8 +13,13 @@ import { EventCard } from '../event-card/event-card';
 
     @if (hasEvents()) {
       <div class="grid grid-cols-3 gap-4">
-        @for (event of events(); track event.id) {
-          <app-event-card [event]="event" />
+        @for (eventGroup of groupedEvents(); track eventGroup.date) {
+          <div class="flex flex-col gap-4">
+            <p class="text-slate-500">{{ eventGroup.date.format('dddd DD MMM YYYY') }}</p>
+            @for (event of eventGroup.events; track event.id) {
+              <app-event-card [event]="event" />
+            }
+          </div>
         }
       </div>
     }
@@ -23,4 +29,6 @@ export class PreviousPage {
   eventsService = inject(EventsService);
   events = computed(() => this.eventsService.events());
   hasEvents = computed(() => this.events().length > 0);
+
+  groupedEvents = computed(() => groupByDate(this.events()));
 }

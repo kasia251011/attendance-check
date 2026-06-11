@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
       <div class="flex items-center gap-2 mt-2">
         <mat-icon fontIcon="calendar_today" class="text-slate-800!" inline />
         <p class="text-slate-800">
-          {{ event().date.format('D MMM YYYY hh:mm') }}
+          {{ event().date.format('h:mm A') }}
         </p>
       </div>
       <div class="flex items-center gap-2 mt-2">
