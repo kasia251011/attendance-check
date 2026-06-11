@@ -7,7 +7,17 @@ import { UserEntry } from '../../services/events/events.model';
   selector: 'app-user-check-in',
   standalone: true,
   imports: [MatSlideToggleModule],
-  templateUrl: './user-check-in.html',
+  template: `
+    <div
+      class="p-4 border-b border-slate-100 cursor-pointer flex justify-between items-center gap-4"
+    >
+      <div class="flex items-center gap-4">
+        <p>{{ userNo() }}</p>
+        <p>{{ user().name }}</p>
+      </div>
+      <mat-slide-toggle (change)="checkInUser(user().id)" [checked]="user().checkedIn" />
+    </div>
+  `,
 })
 export class UserCheckIn {
   user = input.required<UserEntry>();
