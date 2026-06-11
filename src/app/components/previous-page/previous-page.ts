@@ -12,10 +12,10 @@ import { groupByDate } from '../../services/events/events.utils';
     }
 
     @if (hasEvents()) {
-      <div class="grid grid-cols-3 gap-4">
+      <div class="flex flex-col gap-4">
         @for (eventGroup of groupedEvents(); track eventGroup.date) {
-          <div class="flex flex-col gap-4">
-            <p class="text-slate-500">{{ eventGroup.date.format('dddd, DD MMM YYYY') }}</p>
+          <p class="text-slate-500">{{ eventGroup.date.format('dddd, DD MMM YYYY') }}</p>
+          <div class=" grid grid-cols-3 gap-4">
             @for (event of eventGroup.events; track event.id) {
               <app-event-card [event]="event" />
             }

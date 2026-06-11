@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
       (click)="navigateToEvent()"
       class="flex flex-col border border-slate-100 rounded-xl p-4 cursor-pointer hover:bg-slate-100"
     >
-      <p class="font-medium">Class {{ event().name }}</p>
+      <p class="font-medium">Event {{ event().name }}</p>
       <div class="flex items-center gap-2 mt-2">
         <mat-icon fontIcon="calendar_today" class="text-slate-800!" inline />
         <p class="text-slate-800">
