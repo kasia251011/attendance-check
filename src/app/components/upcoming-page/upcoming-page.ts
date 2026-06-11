@@ -11,16 +11,25 @@ import { UserCheckIn } from '../user-check-in/user-check-in';
   templateUrl: './upcoming-page.html',
 })
 export class UpcomingPage {
+  activeEvent;
+  events;
   constructor(
     private eventsService: EventsService,
     private usersService: UsersService,
-  ) {}
+  ) {
+    this.activeEvent = this.eventsService.activeEvent;
+    this.events = this.eventsService.events;
+  }
 
-  getActiveEvent() {
-    return this.eventsService.getActiveEvent();
+  getAttendeesCheckedInCount() {
+    return this.activeEvent()?.attendees?.filter((u: any) => u.checkedIn).length || 0;
   }
 
   createEvent(name: string) {
     this.eventsService.createEvent(name, dayjs(), this.usersService.getUsers());
+  }
+
+  saveEvent() {
+    this.eventsService.saveEvent();
   }
 }

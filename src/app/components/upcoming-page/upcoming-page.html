@@ -1,12 +1,19 @@
-@if (!getActiveEvent()) {
+@if (!activeEvent()) {
   <div class="flex items-center justify-center flex-col pt-20">
     <p class="p-4 text-slate-500">No upcoming events</p>
-    <button matButton="elevated" (click)="createEvent('Elo')">Create Event</button>
+    <button matButton="elevated" (click)="createEvent((events.length + 1).toString())">
+      Create Event
+    </button>
   </div>
-}
-
-@if (getActiveEvent()) {
-  @for (user of getActiveEvent()?.attendees; track user.id) {
+} @else {
+  <div class="flex items-center justify-between">
+    <p>Class {{ activeEvent()?.name }}: {{ activeEvent()?.date?.format('D MMM YYYY') }}</p>
+    <div class="flex gap-4 items-center">
+      <p>{{ getAttendeesCheckedInCount() }} / {{ activeEvent()?.attendees?.length }}</p>
+      <button matButton="elevated" size="small" (click)="saveEvent()">Save</button>
+    </div>
+  </div>
+  @for (user of activeEvent()?.attendees; track user.id) {
     <app-user-check-in [user]="user" [userNo]="$index + 1"></app-user-check-in>
   }
 }
